@@ -1,0 +1,36 @@
+# Ambiente virtual
+venv/
+.env/
+.env.*
+
+# Cache do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Pastas temporárias
+*.DS_Store
+*.log
+*.tmp
+
+# Banco SQLite (opcional)
+*.db
+*.sqlite3
+
+# Cache do editor
+.vscode/
+.idea/
+
+# Arquivos do pytest (se usar)
+.pytest_cache/
+coverage.xml
+htmlcov/
+
+# Arquivos do Docker (se quiser ignorar)
+*.pid
+
+# Build e dist
+build/
+dist/
+*.egg-info/
