@@ -372,33 +372,9 @@ O projeto utiliza **SQLite** para persistência de dados. O arquivo `enderecos.d
 
 A API implementa tratamento de erros adequado com códigos HTTP apropriados:
 
-- **200 OK**: Operação bem-sucedida
-- **201 Created**: Recurso criado com sucesso
-- **204 No Content**: Recurso deletado com sucesso
-- **400 Bad Request**: Dados inválidos na requisição
-- **404 Not Found**: Recurso não encontrado
-- **500 Internal Server Error**: Erro interno do servidor
-- **503 Service Unavailable**: Serviço externo indisponível
-
-## Diferenciais Implementados
-
-✅ **Código limpo e organizado**: Separação clara de responsabilidades (models, database, services)  
-✅ **Validação de dados**: Uso de Pydantic para validação robusta  
-✅ **Tratamento de erros**: Mensagens de erro claras e códigos HTTP apropriados  
-✅ **Documentação automática**: Swagger UI e ReDoc gerados automaticamente pelo FastAPI  
-✅ **Health checks**: Endpoints para monitoramento da saúde das APIs  
-✅ **CORS configurado**: Permite integração com frontends  
-✅ **Docker Compose**: Orquestração simplificada de múltiplos serviços  
-✅ **Persistência de dados**: Banco de dados SQLite com timestamps  
-
-## Repositórios
-
-- **API Principal**: [Link para o repositório no GitHub]
-- **API Secundária**: [Link para o repositório no GitHub]
-
 ## Autor
 
-Desenvolvido como parte do MVP de Arquitetura de Software.
+Desenvolvido por Gabriel Boniolo como parte do MVP da disciplina de Arquitetura de Software | Engenharia de Software - PUC-Rio..
 
 ## Licença
 
