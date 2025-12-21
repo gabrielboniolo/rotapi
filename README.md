@@ -1,4 +1,4 @@
-# API Principal - Gerenciamento de Endereços
+# rotapi (API Principal) - Gerenciamento de Endereços
 
 ## Descrição
 
@@ -30,20 +30,9 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
     Dados de          Cálculo de
     Endereços         Distâncias
 ```
-
-## Tecnologias Utilizadas
-- **Python 3.11**
-- **FastAPI**
-- **Uvicorn**
-- **SQLite**
-- **Pydantic**
-- **Requests**
-- **Docker**
-- **Docker Compose**
-
 ## Funcionalidades
 
-### API Principal
+### rotapi (API Principal)
 - **POST /enderecos**: Cria um novo endereço consultando o ViaCEP
 - **GET /enderecos**: Lista todos os endereços cadastrados
 - **GET /enderecos/{id}**: Busca um endereço específico
@@ -53,7 +42,7 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
 - **GET /consultar-cep/{cep}**: Consulta CEP no ViaCEP sem salvar
 - **GET /health**: Verifica status da API e dependências
 
-### API Secundária
+### rotapi_calc (API Secundária)
 - **POST /calcular-distancia**: Calcula distância entre coordenadas
 - **POST /validar-coordenadas**: Valida coordenadas geográficas
 - **GET /health**: Verifica status da API
@@ -116,10 +105,10 @@ docker-compose up --build
 
 3. **Acessar as APIs:**
 
-- **API Principal**: http://localhost:8000
-- **Documentação API Principal (Swagger)**: http://localhost:8000/docs
-- **API Secundária**: http://localhost:8001
-- **Documentação API Secundária (Swagger)**: http://localhost:8001/docs
+- **API Principal**: http://127.0.0.1:8000
+- **Documentação API Principal (Swagger)**: http://127.0.0.1:8000/docs
+- **API Secundária**: http://127.0.0.1:9000
+- **Documentação API Secundária (Swagger)**: http://127.0.0.1:9000/docs
 
 ### Opção 2: Executar com Docker (Containers Individuais)
 
@@ -128,7 +117,7 @@ docker-compose up --build
 ```bash
 cd ../api-secundaria
 docker build -t api-secundaria .
-docker run -d -p 8001:8001 --name api-secundaria api-secundaria
+docker run -d -p 9000:9000 --name api-secundaria api-secundaria
 ```
 
 **API Principal:**
@@ -137,7 +126,7 @@ docker run -d -p 8001:8001 --name api-secundaria api-secundaria
 cd ../api-principal
 docker build -t api-principal .
 docker run -d -p 8000:8000 --name api-principal \
-  -e API_SECUNDARIA_URL=http://host.docker.internal:8001 \
+  -e API_SECUNDARIA_URL=http://host.docker.internal:9000 \
   api-principal
 ```
 
@@ -148,7 +137,7 @@ docker run -d -p 8000:8000 --name api-principal \
 ```bash
 cd ../api-secundaria
 pip install -r requirements.txt
-uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
+uvicorn app.main:app --reload --port 9000
 ```
 
 **API Principal (em outro terminal):**
@@ -156,196 +145,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
 ```bash
 cd ../api-principal
 pip install -r requirements.txt
-export API_SECUNDARIA_URL=http://localhost:8001
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-## Exemplos de Uso
-
-### 1. Consultar CEP no ViaCEP
-
-```bash
-curl -X GET "http://localhost:8000/consultar-cep/01310100"
-```
-
-**Resposta:**
-```json
-{
-  "cep": "01310-100",
-  "logradouro": "Avenida Paulista",
-  "complemento": "",
-  "bairro": "Bela Vista",
-  "localidade": "São Paulo",
-  "uf": "SP",
-  "ibge": "3550308",
-  "gia": "1004",
-  "ddd": "11",
-  "siafi": "7107"
-}
-```
-
-### 2. Criar um novo endereço
-
-```bash
-curl -X POST "http://localhost:8000/enderecos" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "cep": "01310100",
-    "complemento": "Próximo ao MASP",
-    "latitude": -23.5613,
-    "longitude": -46.6565
-  }'
-```
-
-**Resposta:**
-```json
-{
-  "id": 1,
-  "cep": "01310-100",
-  "logradouro": "Avenida Paulista",
-  "complemento": "Próximo ao MASP",
-  "bairro": "Bela Vista",
-  "localidade": "São Paulo",
-  "uf": "SP",
-  "latitude": -23.5613,
-  "longitude": -46.6565,
-  "criado_em": "2024-01-15 10:30:00",
-  "atualizado_em": "2024-01-15 10:30:00"
-}
-```
-
-### 3. Listar todos os endereços
-
-```bash
-curl -X GET "http://localhost:8000/enderecos"
-```
-
-### 4. Buscar endereço específico
-
-```bash
-curl -X GET "http://localhost:8000/enderecos/1"
-```
-
-### 5. Atualizar endereço
-
-```bash
-curl -X PUT "http://localhost:8000/enderecos/1" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "complemento": "Em frente ao parque Trianon",
-    "latitude": -23.5613,
-    "longitude": -46.6565
-  }'
-```
-
-### 6. Calcular distância entre dois endereços
-
-Primeiro, crie dois endereços com coordenadas:
-
-```bash
-# Endereço 1 - São Paulo (Av. Paulista)
-curl -X POST "http://localhost:8000/enderecos" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "cep": "01310100",
-    "latitude": -23.5613,
-    "longitude": -46.6565
-  }'
-
-# Endereço 2 - Rio de Janeiro (Copacabana)
-curl -X POST "http://localhost:8000/enderecos" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "cep": "22070002",
-    "latitude": -22.9711,
-    "longitude": -43.1822
-  }'
-```
-
-Depois, calcule a distância:
-
-```bash
-curl -X POST "http://localhost:8000/enderecos/calcular-distancia" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "endereco_origem_id": 1,
-    "endereco_destino_id": 2
-  }'
-```
-
-**Resposta:**
-```json
-{
-  "distancia_km": 357.45,
-  "endereco_origem": {
-    "id": 1,
-    "cep": "01310-100",
-    "logradouro": "Avenida Paulista",
-    "localidade": "São Paulo",
-    "uf": "SP",
-    "latitude": -23.5613,
-    "longitude": -46.6565,
-    ...
-  },
-  "endereco_destino": {
-    "id": 2,
-    "cep": "22070-002",
-    "logradouro": "Avenida Atlântica",
-    "localidade": "Rio de Janeiro",
-    "uf": "RJ",
-    "latitude": -22.9711,
-    "longitude": -43.1822,
-    ...
-  }
-}
-```
-
-### 7. Deletar endereço
-
-```bash
-curl -X DELETE "http://localhost:8000/enderecos/1"
-```
-
-### 8. Verificar saúde da API
-
-```bash
-curl -X GET "http://localhost:8000/health"
-```
-
-**Resposta:**
-```json
-{
-  "status": "healthy",
-  "api_secundaria": "online"
-}
-```
-
-## Comandos Docker Úteis
-
-**Parar os serviços:**
-```bash
-docker-compose down
-```
-
-**Ver logs:**
-```bash
-docker-compose logs -f
-```
-
-**Ver logs de um serviço específico:**
-```bash
-docker-compose logs -f api-principal
-docker-compose logs -f api-secundaria
-```
-
-**Reconstruir as imagens:**
-```bash
-docker-compose up --build
-```
-
-**Remover volumes:**
-```bash
-docker-compose down -v
+uvicorn app.main:app --reload --port 8000
 ```
 
 ## Banco de Dados
@@ -359,18 +159,11 @@ O projeto utiliza **SQLite** para persistência de dados. O arquivo `enderecos.d
 | id | INTEGER | Chave primária (auto-incremento) |
 | cep | TEXT | CEP do endereço |
 | logradouro | TEXT | Nome da rua/avenida |
-| complemento | TEXT | Complemento do endereço |
 | bairro | TEXT | Bairro |
-| localidade | TEXT | Cidade |
+| cidade | TEXT | Cidade |
 | uf | TEXT | Estado (UF) |
 | latitude | REAL | Coordenada de latitude |
 | longitude | REAL | Coordenada de longitude |
-| criado_em | TIMESTAMP | Data/hora de criação |
-| atualizado_em | TIMESTAMP | Data/hora da última atualização |
-
-## Tratamento de Erros
-
-A API implementa tratamento de erros adequado com códigos HTTP apropriados:
 
 ## Autor
 
