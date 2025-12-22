@@ -65,21 +65,6 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
 - **Docker**
 - **Docker Compose**
 
-## Estrutura do Projeto
-
-```
-api-principal/
-├── app/
-│   ├── __init__.py         # Inicialização do pacote
-│   ├── main.py             # Aplicação principal e rotas
-│   ├── models.py           # Modelos de dados (Pydantic)
-│   ├── database.py         # Configuração e operações do banco
-│   └── services.py         # Serviços externos (ViaCEP e API Secundária)
-├── Dockerfile              # Instruções para criar imagem Docker
-├── docker-compose.yml      # Orquestração dos serviços
-├── requirements.txt        # Dependências Python
-└── README.md              # Documentação
-```
 ## Instalação e Execução
 
 ### Pré-requisitos
