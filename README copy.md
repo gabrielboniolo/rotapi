@@ -2,7 +2,7 @@
 
 ## Descrição
 
-API REST desenvolvida em Python com FastAPI para gerenciamento de endereços. A aplicação integra-se com a **API ViaCEP** (serviço externo) para buscar dados de endereços e com uma **API secundária** para calcular distâncias entre coordenadas geográficas. Os dados são persistidos em um banco de dados SQLite.
+API REST desenvolvida em Python com FastAPI para gerenciamento de endereços. A aplicação integra-se com a **API ViaCEP** (serviço externo) para buscar dados de endereços brasileiros e com uma **API secundária** para calcular distâncias entre coordenadas geográficas. Os dados são persistidos em um banco de dados SQLite.
 
 ## Objetivo
 
@@ -14,6 +14,7 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
 ┌─────────────────┐
 │   API Principal │
 │   (FastAPI)     │
+│   Porta: 8000   │
 └────────┬────────┘
          │
          ├─────────────────┐
@@ -22,7 +23,7 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
 ┌─────────────────┐  ┌──────────────────┐
 │   API ViaCEP    │  │  API Secundária  │
 │   (Externa)     │  │   (FastAPI)      │
-│   Consulta CEP  │  │                  │
+│   Consulta CEP  │  │   Porta: 8001    │
 └─────────────────┘  └──────────────────┘
          │                 │
          │                 │
@@ -30,16 +31,6 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
     Dados de          Cálculo de
     Endereços         Distâncias
 ```
-
-## Tecnologias Utilizadas
-- **Python 3.11**
-- **FastAPI**
-- **Uvicorn**
-- **SQLite**
-- **Pydantic**
-- **Requests**
-- **Docker**
-- **Docker Compose**
 
 ## Funcionalidades
 
@@ -68,13 +59,13 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
 ## Tecnologias Utilizadas
 
 - **Python 3.11**
-- **FastAPI**
-- **Uvicorn**
-- **SQLite**
-- **Pydantic**
-- **Requests**
-- **Docker**
-- **Docker Compose**
+- **FastAPI**: Framework web moderno e de alta performance
+- **Uvicorn**: Servidor ASGI
+- **SQLite**: Banco de dados relacional leve
+- **Pydantic**: Validação de dados
+- **Requests**: Cliente HTTP para comunicação entre APIs
+- **Docker**: Containerização
+- **Docker Compose**: Orquestração de containers
 
 ## Estrutura do Projeto
 
@@ -91,6 +82,7 @@ api-principal/
 ├── requirements.txt        # Dependências Python
 └── README.md              # Documentação
 ```
+
 ## Instalação e Execução
 
 ### Pré-requisitos
