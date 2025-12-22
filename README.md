@@ -152,7 +152,7 @@ O projeto utiliza **SQLite** para persistência de dados. O arquivo `enderecos.d
 
 ## Autor
 
-Desenvolvido por Gabriel Boniolo como parte do MVP da disciplina de Arquitetura de Software | Engenharia de Software - PUC-Rio..
+Desenvolvido por Gabriel Boniolo como parte do MVP da disciplina de Arquitetura de Software | Engenharia de Software - PUC-Rio.
 
 ## Licença
 
