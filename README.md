@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # API Principal - Gerenciamento de Endereços
+=======
+# rotapi (API Principal) - Gerenciamento de Endereços
+>>>>>>> 85ff5524929ba95deee46abea979af3b00190eac
 
 ## Descrição
 
@@ -30,6 +34,7 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
     Dados de          Cálculo de
     Endereços         Distâncias
 ```
+<<<<<<< HEAD
 
 ## Tecnologias Utilizadas
 - **Python 3.11**
@@ -41,9 +46,11 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
 - **Docker**
 - **Docker Compose**
 
+=======
+>>>>>>> 85ff5524929ba95deee46abea979af3b00190eac
 ## Funcionalidades
 
-### API Principal
+### rotapi (API Principal)
 - **POST /enderecos**: Cria um novo endereço consultando o ViaCEP
 - **GET /enderecos**: Lista todos os endereços cadastrados
 - **GET /enderecos/{id}**: Busca um endereço específico
@@ -53,7 +60,7 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
 - **GET /consultar-cep/{cep}**: Consulta CEP no ViaCEP sem salvar
 - **GET /health**: Verifica status da API e dependências
 
-### API Secundária
+### rotapi_calc (API Secundária)
 - **POST /calcular-distancia**: Calcula distância entre coordenadas
 - **POST /validar-coordenadas**: Valida coordenadas geográficas
 - **GET /health**: Verifica status da API
@@ -76,21 +83,29 @@ Este projeto faz parte de um MVP de arquitetura de software modular, demonstrand
 - **Docker**
 - **Docker Compose**
 
-## Estrutura do Projeto
+## Instalação e Execução
 
+### Pré-requisitos
+
+- Docker e Docker Compose instalados
+- Python 3.11 ou superior (para execução local)
+
+### Opção 1: Executar com Docker Compose (Recomendado)
+
+Esta opção executa automaticamente a API Principal e a API Secundária.
+
+1. **Clone ou navegue até o diretório do projeto:**
+
+```bash
+cd api-principal
 ```
-api-principal/
-├── app/
-│   ├── __init__.py         # Inicialização do pacote
-│   ├── main.py             # Aplicação principal e rotas
-│   ├── models.py           # Modelos de dados (Pydantic)
-│   ├── database.py         # Configuração e operações do banco
-│   └── services.py         # Serviços externos (ViaCEP e API Secundária)
-├── Dockerfile              # Instruções para criar imagem Docker
-├── docker-compose.yml      # Orquestração dos serviços
-├── requirements.txt        # Dependências Python
-└── README.md              # Documentação
+
+2. **Execute o Docker Compose:**
+
+```bash
+docker-compose up --build
 ```
+<<<<<<< HEAD
 ## Instalação e Execução
 
 ### Pré-requisitos
@@ -120,6 +135,15 @@ docker-compose up --build
 - **Documentação API Principal (Swagger)**: http://localhost:8000/docs
 - **API Secundária**: http://localhost:8001
 - **Documentação API Secundária (Swagger)**: http://localhost:8001/docs
+=======
+
+3. **Acessar as APIs:**
+
+- **API Principal**: http://127.0.0.1:8000
+- **Documentação API Principal (Swagger)**: http://127.0.0.1:8000/docs
+- **API Secundária**: http://127.0.0.1:9000
+- **Documentação API Secundária (Swagger)**: http://127.0.0.1:9000/docs
+>>>>>>> 85ff5524929ba95deee46abea979af3b00190eac
 
 ### Opção 2: Executar com Docker (Containers Individuais)
 
@@ -128,7 +152,11 @@ docker-compose up --build
 ```bash
 cd ../api-secundaria
 docker build -t api-secundaria .
+<<<<<<< HEAD
 docker run -d -p 8001:8001 --name api-secundaria api-secundaria
+=======
+docker run -d -p 9000:9000 --name api-secundaria api-secundaria
+>>>>>>> 85ff5524929ba95deee46abea979af3b00190eac
 ```
 
 **API Principal:**
@@ -137,7 +165,11 @@ docker run -d -p 8001:8001 --name api-secundaria api-secundaria
 cd ../api-principal
 docker build -t api-principal .
 docker run -d -p 8000:8000 --name api-principal \
+<<<<<<< HEAD
   -e API_SECUNDARIA_URL=http://host.docker.internal:8001 \
+=======
+  -e API_SECUNDARIA_URL=http://host.docker.internal:9000 \
+>>>>>>> 85ff5524929ba95deee46abea979af3b00190eac
   api-principal
 ```
 
@@ -148,7 +180,11 @@ docker run -d -p 8000:8000 --name api-principal \
 ```bash
 cd ../api-secundaria
 pip install -r requirements.txt
+<<<<<<< HEAD
 uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
+=======
+uvicorn app.main:app --reload --port 9000
+>>>>>>> 85ff5524929ba95deee46abea979af3b00190eac
 ```
 
 **API Principal (em outro terminal):**
@@ -156,6 +192,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
 ```bash
 cd ../api-principal
 pip install -r requirements.txt
+<<<<<<< HEAD
 export API_SECUNDARIA_URL=http://localhost:8001
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
@@ -346,6 +383,9 @@ docker-compose up --build
 **Remover volumes:**
 ```bash
 docker-compose down -v
+=======
+uvicorn app.main:app --reload --port 8000
+>>>>>>> 85ff5524929ba95deee46abea979af3b00190eac
 ```
 
 ## Banco de Dados
@@ -359,6 +399,7 @@ O projeto utiliza **SQLite** para persistência de dados. O arquivo `enderecos.d
 | id | INTEGER | Chave primária (auto-incremento) |
 | cep | TEXT | CEP do endereço |
 | logradouro | TEXT | Nome da rua/avenida |
+<<<<<<< HEAD
 | complemento | TEXT | Complemento do endereço |
 | bairro | TEXT | Bairro |
 | localidade | TEXT | Cidade |
@@ -403,3 +444,18 @@ Desenvolvido como parte do MVP de Arquitetura de Software.
 ## Licença
 
 Este projeto é de código aberto e está disponível para fins educacionais.
+=======
+| bairro | TEXT | Bairro |
+| cidade | TEXT | Cidade |
+| uf | TEXT | Estado (UF) |
+| latitude | REAL | Coordenada de latitude |
+| longitude | REAL | Coordenada de longitude |
+
+## Autor
+
+Desenvolvido por Gabriel Boniolo como parte do MVP da disciplina de Arquitetura de Software | Engenharia de Software - PUC-Rio.
+
+## Licença
+
+Este projeto é de código aberto e está disponível para fins educacionais.
+>>>>>>> 85ff5524929ba95deee46abea979af3b00190eac
