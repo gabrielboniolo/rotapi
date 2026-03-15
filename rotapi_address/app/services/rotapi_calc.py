@@ -10,9 +10,9 @@ def calcular_distancia(lat1, lon1, lat2, lon2):
         "lon2": lon2
     }
 
-    resp = requests.post(API_SECUNDARIA_URL, json=payload)
+    response = requests.post(API_SECUNDARIA_URL, json=payload)
 
-    if resp.status_code != 200:
+    if response.status_code != 200:
         return None
 
-    return resp.json()
+    return response.json()
