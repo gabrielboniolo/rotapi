@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app.schemas import DistanciaInput, DistanciaOutput
-from app.services.haversine import haversine_distance
+from app.utils.haversine import haversine_distance
 
 router = APIRouter(prefix="/calcular", tags=["Calcular Distância"])
 
