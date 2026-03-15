@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
+
 from app.database import Base, engine
 from app.routers import enderecos, distancia
 
@@ -13,6 +14,6 @@ app = FastAPI(
 app.include_router(enderecos.router)
 app.include_router(distancia.router)
 
-@app.get("/")
+@app.get("/", include_in_schema=False)
 def home():
     return RedirectResponse(url="/docs")
