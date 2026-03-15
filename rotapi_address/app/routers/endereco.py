@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.database import SessionLocal
-from app import models, schemas
-from app.services.via_cep import consultar_cep
 
-router = APIRouter(prefix="/enderecos", tags=["Endereços"])
+from app.models import Endereco
+from app.database import SessionLocal
+from app.services.via_cep import consultar_cep
+from app.schemas.endereco import EnderecoCreate, EnderecoUpdate, EnderecoResponse
+
+endereco_router = APIRouter(prefix="/endereco", tags=["Endereço"])
 
 def get_db():
     db = SessionLocal()
@@ -13,16 +15,14 @@ def get_db():
     finally:
         db.close()
 
-
-# POST - Criar endereço usando ViaCEP
-@router.post("/", response_model=schemas.EnderecoResponse)
-def criar_endereco(data: schemas.EnderecoCreate, db: Session = Depends(get_db)):
+@endereco_router.post("/", response_model=EnderecoResponse)
+def criar_endereco(data: EnderecoCreate, db: Session = Depends(get_db)):
     via = consultar_cep(data.cep)
 
     if not via:
         raise HTTPException(status_code=404, detail="CEP inválido ou não encontrado")
 
-    endereco = models.Endereco(
+    endereco = Endereco(
         cep=data.cep,
         logradouro=via["logradouro"],
         bairro=via["bairro"],
@@ -39,19 +39,17 @@ def criar_endereco(data: schemas.EnderecoCreate, db: Session = Depends(get_db)):
     return endereco
 
 
-# GET - Buscar por ID
-@router.get("/{id}", response_model=schemas.EnderecoResponse)
+@endereco_router.get("/{id}", response_model=EnderecoResponse)
 def obter_endereco(id: int, db: Session = Depends(get_db)):
-    e = db.query(models.Endereco).filter(models.Endereco.id == id).first()
+    e = db.query(Endereco).filter(Endereco.id == id).first()
     if not e:
         raise HTTPException(status_code=404, detail="Endereço não encontrado")
     return e
 
 
-# PUT - Atualizar dados
-@router.put("/{id}", response_model=schemas.EnderecoResponse)
-def atualizar_endereco(id: int, data: schemas.EnderecoUpdate, db: Session = Depends(get_db)):
-    endereco = db.query(models.Endereco).filter(models.Endereco.id == id).first()
+@endereco_router.put("/{id}", response_model=EnderecoResponse)
+def atualizar_endereco(id: int, data: EnderecoUpdate, db: Session = Depends(get_db)):
+    endereco = db.query(Endereco).filter(Endereco.id == id).first()
 
     if not endereco:
         raise HTTPException(status_code=404, detail="Endereço não encontrado")
@@ -64,10 +62,9 @@ def atualizar_endereco(id: int, data: schemas.EnderecoUpdate, db: Session = Depe
     return endereco
 
 
-# DELETE - Remover endereço
-@router.delete("/{id}")
+@endereco_router.delete("/{id}")
 def deletar_endereco(id: int, db: Session = Depends(get_db)):
-    endereco = db.query(models.Endereco).filter(models.Endereco.id == id).first()
+    endereco = db.query(Endereco).filter(Endereco.id == id).first()
 
     if not endereco:
         raise HTTPException(status_code=404, detail="Endereço não encontrado")

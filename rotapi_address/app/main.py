@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
 from app.database import Base, engine
-from app.routers import enderecos, distancia
+from app.routers import endereco, distancia
 
 Base.metadata.create_all(bind=engine)
 
@@ -11,7 +11,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-app.include_router(enderecos.router)
+app.include_router(endereco.endereco_router)
 app.include_router(distancia.router)
 
 @app.get("/", include_in_schema=False)

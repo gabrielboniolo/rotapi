@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class EnderecoBase(BaseModel):
     cep: str
@@ -13,11 +13,11 @@ class EnderecoUpdate(BaseModel):
     uf: str | None = None
 
 class EnderecoResponse(EnderecoBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     logradouro: str
     bairro: str
     cidade: str
     uf: str
 
-    class Config:
-        orm_mode = True
