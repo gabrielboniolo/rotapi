@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from app.services.distancia_service import calcular_distancia
+from app.services.rotapi_calc import calcular_distancia
 
 router = APIRouter(prefix="/distancia", tags=["Distância"])
 
