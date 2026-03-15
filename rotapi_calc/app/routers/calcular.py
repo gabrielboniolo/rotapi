@@ -1,9 +1,9 @@
 from fastapi import APIRouter
+
 from app.schemas import DistanciaInput, DistanciaOutput
 from app.services.haversine import haversine_distance
 
 router = APIRouter(prefix="/calcular", tags=["Calcular Distância"])
-
 
 @router.post("/", response_model=DistanciaOutput)
 def calcular_distancia(payload: DistanciaInput):

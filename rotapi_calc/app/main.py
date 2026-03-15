@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+
 from app.routers import calcular
 
 app = FastAPI(
@@ -8,9 +10,6 @@ app = FastAPI(
 
 app.include_router(calcular.router)
 
-
-@app.get("/")
+@app.get("/", include_in_schema=False)
 def home():
-    return {"mensagem": "API Secundária funcionando!"}
-
-#uvicorn app.main:app --reload --port 9000
+    return RedirectResponse(url="/docs")
