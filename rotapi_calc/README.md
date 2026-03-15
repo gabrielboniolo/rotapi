@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # API Secundária – Cálculo de Distância
 
 ## Descrição
@@ -161,8 +160,3 @@ A fórmula de Haversine é utilizada para calcular a distância entre dois ponto
 ## Autor
 
 Desenvolvido por Gabriel Boniolo como parte do MVP da disciplina de Arquitetura de Software | Engenharia de Software - PUC-Rio.
-
-## Licença
-
-Este projeto é de código aberto e está disponível para fins educacionais.
->>>>>>> refs/remotes/origin/main
